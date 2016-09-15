@@ -1,0 +1,17 @@
+##-----------------------------------------------##
+##      Initial condition for the Spp system     ##
+##-----------------------------------------------##
+##---- IC space: initCondX (1:uniform, 2:Gaussian, 3:square lattice)
+1
+## uniform: Lx,Ly
+5
+5
+## Gaussian in position (xMean, yMean, xVar, yVar)
+5
+6
+.5
+1
+##---- IC Strategy (1:uniform, 2:two blocks)
+1
+## ratio cooperating
+.4

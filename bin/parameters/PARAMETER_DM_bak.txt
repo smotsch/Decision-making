@@ -1,0 +1,35 @@
+##--------------------------------------------##
+##       Parameters of the Spp system         ##
+##--------------------------------------------##
+## N: number of particles
+100
+## Radii: R_coop, R_def
+2 
+1
+## choiceModel: 1:voter model, 2:normalized, 3:threshold, 4:Best-response, 5:linear response
+1
+## intensity jump (alpha)
+.1
+## payoff matrix: a00, a01, a10, a11
+1
+0
+0
+1
+## threshold
+1
+## Domain (Lx, Ly)
+10
+10
+## Time (dt,Time)
+0.01
+10
+##--------  Computation  --------##
+## Use the fast technic (isGrid)
+F
+## should randomize seed (isInitRand)? If not, give seed number
+F
+16
+## Save trajectories (isTrajectorySave)
+T
+## jumpPrint ? (1 no jump)
+1
