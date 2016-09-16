@@ -210,8 +210,8 @@ contains
     TYPE(PARAM_DM), intent(in)                    :: P
     Double Precision, Dimension(:), intent(out)   :: rateG01, rateG10
     ! normalized voter model
-    rateG01 = defectNeigh/(coopNeigh+defectNeigh)
-    rateG10 = coopNeigh/(coopNeigh+defectNeigh)
+    rateG01 = 1d0*defectNeigh/(coopNeigh+defectNeigh)
+    rateG10 = 1d0*coopNeigh/(coopNeigh+defectNeigh)
 
   end Subroutine RateSwitching
 
@@ -229,9 +229,9 @@ contains
     Allocate(shouldSwitch(P%N))
     Call Random_number(rand_N)
     ! test if should switch: rate is alpha*g_01 or alpha*g_10 depending on S
-    shouldSwitch = (rand_N < (1-exp(P%alpha*P%dt*( rateG01*(1-S) + rateG10*S ))))
+    shouldSwitch = (rand_N < (1-exp(-P%alpha*P%dt*( rateG01*(1-S) + rateG10*S ))))
     ! update: 0 -> 1 and 1 -> 0
-    S = S + (1-S)*int(shouldSwitch) - S*int(shouldSwitch)
+    S = S + (1-S)*shouldSwitch - S*shouldSwitch
     ! same as S = S + (S==0)*shouldSwtich - (S==1)*shouldSwtich 
 
     Deallocate(rand_N,shouldSwitch)
