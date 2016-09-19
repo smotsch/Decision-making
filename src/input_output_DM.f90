@@ -27,7 +27,7 @@ module input_output_DM
   TYPE PARAM_init
      Integer                            :: initCondX    ! square lattice, Gaussian
      Double Precision                   :: Lx,Ly
-     Double Precision                   :: xMean,yMean,xVar,yVar
+     Double Precision                   :: xMean,yMean,xStd,yStd
      Integer                            :: initCondS    ! uniform, two blocks
      Double Precision                   :: ratioCoop
   end TYPE PARAM_init
@@ -118,8 +118,8 @@ contains
     read(16,*)temp
     read(16,*)Pinit%xMean
     read(16,*)Pinit%yMean
-    read(16,*)Pinit%xVar
-    read(16,*)Pinit%yVar
+    read(16,*)Pinit%xStd
+    read(16,*)Pinit%yStd
     read(16,*)temp
     read(16,*)Pinit%initCondS
     read(16,*)temp

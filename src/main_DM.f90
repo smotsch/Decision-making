@@ -69,7 +69,7 @@ Program DM                      ! Decision-Making
 
   Do iStep=1,nSteps
 
-     !- 0) Switch strategy                                   -!
+     !- A) Switch strategy                                   -!
      !--------------------------------------------------------!
      If ( P%isGrid ) Then
         Call Neighbors_MN_Fast(X,S,P, &
@@ -81,7 +81,7 @@ Program DM                      ! Decision-Making
      Call RateSwitching(coopNeigh,defectNeigh,P, rateG01, rateG10)
      Call Switching_S(S,rateG01,rateG10,P)
      
-     !- 1) Compute X' for each  particle                     -!
+     !- B) Compute dX for each  particle                     -!
      !--------------------------------------------------------!
      If ( P%isGrid ) Then
         Call dX_Fast(X,S,P,&
@@ -89,12 +89,10 @@ Program DM                      ! Decision-Making
      else
         Call dX_Slow(X,S,P, dX)
      End If
-     
-     !- 2) Compute the new velocity and position -!
-     !--------------------------------------------!
+     ! update position
      X = X - P%dt*dX
      
-     !- 3) Update the Verlet_list -!
+     !- C) Update the Verlet_list -!
      !-----------------------------!
      If (P%isGrid) Then
         do i0=1,N
@@ -114,7 +112,7 @@ Program DM                      ! Decision-Making
         end do
      end If
 
-     !- 4) Write the data and statistical analysis -!
+     !- D) Write the data and statistical analysis -!
      !----------------------------------------------!
      if (modulo(iStep,P%jumpPrint)==0 .or. iStep==nSteps) Then
         if (P%isTrajectorySave) then

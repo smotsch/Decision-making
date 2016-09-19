@@ -41,8 +41,8 @@ contains
           !- Gaussian distribution
           isInsideDomain = .false.
           Do while (.not. isInsideDomain)
-             X_i0(1) = Pinit%xMean + Pinit%xVar*RandNorm()
-             X_i0(2) = Pinit%yMean + Pinit%yVar*RandNorm()
+             X_i0(1) = Pinit%xMean + Pinit%xStd*RandNorm()
+             X_i0(2) = Pinit%yMean + Pinit%yStd*RandNorm()
              if (0d0<=X_i0(1) .and. X_i0(1)<P%Lx .and. 0d0<=X_i0(2) .and. X_i0(2)<P%Ly) Then
                 isInsideDomain = .true.
                 X(i0,:) = X_i0

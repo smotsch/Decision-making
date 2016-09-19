@@ -6,7 +6,7 @@
 ## uniform: Lx,Ly
 5
 5
-## Gaussian in position (xMean, yMean, xVar, yVar)
+## Gaussian in position (xMean, yMean, xStd, yStd)
 5
 6
 .5
