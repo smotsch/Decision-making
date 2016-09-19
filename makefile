@@ -15,7 +15,6 @@ OBJECTS = toolkit.o      \
 ## compiler
 CC = gfortran
 ## options for the compiler (-g for debugger, parano: -check all -warn all),
-#FLAGS = -Wall -fbackslash -O2
 FLAGS = -Wall -fbackslash -O2
 ## name of the executable
 EXEC = DecisionMaking
@@ -51,7 +50,7 @@ $(EXEC): $(OBJECTS)
 
 .PHONY: init_folder init_parameters move clean
 init_folder:
-	mkdir -p $(OBJDIR) data visualization/images visualization/videos
+	mkdir -p $(OBJDIR) data
 init_parameters:
 	@if [ ! -f 'bin/PARAMETER_init.txt' ]; then \
 	  cp bin/parameters/PARAMETER_init_bak.txt bin/PARAMETER_init.txt; \

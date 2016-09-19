@@ -209,10 +209,33 @@ contains
     Integer, Dimension(:), intent(in)             :: coopNeigh, defectNeigh
     TYPE(PARAM_DM), intent(in)                    :: P
     Double Precision, Dimension(:), intent(out)   :: rateG01, rateG10
+    
     ! normalized voter model
-    rateG01 = 1d0*defectNeigh/(coopNeigh+defectNeigh)
-    rateG10 = 1d0*coopNeigh/(coopNeigh+defectNeigh)
-
+    select case (P%choiceModel)
+    case(1)
+       ! 1) voter model
+       rateG01 = defectNeigh
+       rateG10 = coopNeigh
+    case(2)
+       ! 2) normalized voter model
+       rateG01 = 1d0*defectNeigh/(coopNeigh+defectNeigh)
+       rateG10 = 1d0*coopNeigh/(coopNeigh+defectNeigh)
+    case(3)
+       ! 3) threshold voter model
+       !rateG01 = 1d0*(defectNeigh > P%Threshold)
+       !rateG10 = 1d0*(coopNeigh > P%Threshold)
+       rateG01 = transfer(defectNeigh > P%Threshold, 1.0)
+       rateG10 = transfer(coopNeigh > P%Threshold, 1.0)
+    case(4)
+       ! 4) best-response: B0>B1
+       !rateG01 = 1d0*((P%a10*coopNeigh + P%a11*defectNeigh) > (P%a00*coopNeigh + P%a01*defectNeigh))
+       rateG01 = transfer((P%a10*coopNeigh + P%a11*defectNeigh) > (P%a00*coopNeigh + P%a01*defectNeigh), 1.0)
+       rateG10 = 1-rateG01
+    case(5)
+       ! 5) linear response
+       rateG01 = (P%a10*coopNeigh + P%a11*defectNeigh)
+       rateG10 = (P%a00*coopNeigh + P%a01*defectNeigh)
+    end select
   end Subroutine RateSwitching
 
   
