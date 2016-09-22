@@ -69,28 +69,23 @@ Program DM                      ! Decision-Making
 
   Do iStep=1,nSteps
 
-     !- A) Switch strategy                                   -!
-     !--------------------------------------------------------!
-     If ( P%isGrid ) Then
-        Call Neighbors_MN_Fast(X,S,P, &
+     ! A) Compute dX and the Neighbors
+     !--------------------------------
+     If (P%isGrid) Then
+        Call dX_and_Neighbors_fast(X,S,P, &
              posGrid,firstParticleGrid,verletListNext, &
-             coopNeigh, defectNeigh)
+             dX,coopNeigh,defectNeigh)
      else
-        Call Neighbors_MN_Slow(X,S,P, coopNeigh, defectNeigh)
-     End If
+        Call dX_and_Neighbors_slow(X,S,P, dX,coopNeigh,defectNeigh)
+     end If
+
+     !- B.1) Update Position
+     !----------------------
+     X = X - P%dt*dX
+     !- B.2) Update Strategy
+     !----------------------
      Call RateSwitching(coopNeigh,defectNeigh,P, rateG01, rateG10)
      Call Switching_S(S,rateG01,rateG10,P)
-     
-     !- B) Compute dX for each  particle                     -!
-     !--------------------------------------------------------!
-     If ( P%isGrid ) Then
-        Call dX_Fast(X,S,P,&
-             posGrid,firstParticleGrid,verletListNext, dX)
-     else
-        Call dX_Slow(X,S,P, dX)
-     End If
-     ! update position
-     X = X - P%dt*dX
      
      !- C) Update the Verlet_list -!
      !-----------------------------!
